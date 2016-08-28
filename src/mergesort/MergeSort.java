@@ -21,10 +21,13 @@ public class MergeSort {
         int i, j, k;
         int aux[];
 
+        // Dimensionando o vetor e inicializando as variáveis
         aux = new int[v.length];
         i = inicio;
         j = meio + 1;
         k = inicio;
+        
+        // Registrando os menores elementos de cada parte no vetor auxiliar
         while (i <= meio && j <= fim) {
             if (v[i] < v[j]) {
                 aux[k++] = v[i++];
@@ -32,6 +35,8 @@ public class MergeSort {
                 aux[k++] = v[j++];
             }
         }
+        
+        // Registrando no vetor os maiores elementos restantes
         while (i <= meio || j <= fim) {
             if (i == meio + 1) {
                 aux[k++] = v[j++];
@@ -40,6 +45,7 @@ public class MergeSort {
             }
         }
 
+        // Copiando o vetor auxiliar para o vetor original
         for (i = inicio; i <= fim; i++) {
             v[i] = aux[i];
         }
