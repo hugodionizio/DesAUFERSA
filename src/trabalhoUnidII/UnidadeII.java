@@ -1,4 +1,6 @@
-/*(NULL)*/
+package trabalhoUnidII;
+
+/*Coleção de porcas e parafusos*/
 class Colecao {
 	protected int rosca[];
 	protected int parafuso[];
@@ -13,7 +15,7 @@ class Colecao {
 
 }
 
-/*(NULL)*/
+/*Vetor ordenado por inserção e com busca binária*/
 class Vetor {
 	protected int v[];
 
@@ -21,7 +23,9 @@ class Vetor {
 		
 	}
 
-	public int insertionBSearch (int a) {
+	/** Busca em um vetor ordenado por inserção */
+	public static int insertionBSearch (int a) {
+            return 0;
 		
 	}
 
@@ -30,12 +34,12 @@ class Vetor {
 	}
 
 	public int binarySearch (int a, int b) {
+            return 0;
 		
 	}
 
 }
 
-/*(NULL)*/
 class Hash {
 	protected int listaHeap[];
 
@@ -44,12 +48,12 @@ class Hash {
 	}
 
 	public int encontrarK (int a) {
+            return 0;
 		
 	}
 
 }
 
-/*(NULL)*/
 class Heap {
 	protected int altura;
 	protected int valor;
@@ -67,7 +71,7 @@ class Heap {
 
 }
 
-/*(NULL)*/
+/*Busca binária do menor valor em um intervalo*/
 class Intervalo {
 	protected int v[];
 
@@ -80,6 +84,7 @@ class Intervalo {
 	}
 
 	public int buscaBMenor (int a) {
+            return 0;
 		
 	}
 
