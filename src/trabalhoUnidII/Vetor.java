@@ -64,30 +64,27 @@ class Vetor {
     public static int insertionBSearchControl(int v[], int valor) {
 
         insertionSort(v);
-        binarySearch(v, valor);
-
-        return 0;
+        return binarySearch(v, valor);
     }
 
     /**
      * Busca em um vetor ordenado por inserção
      */
     public static int insertionBSearchDirect(int v[], int valor) {
-
-        for (int i = 1; i < v.length; i++) {
-            int aux = v[i];
-            for (int j = i - 1; j >= 0 && (v[j] > aux); j--) {
-                System.out.println("entrou no laço interno");
-                v[j + 1] = v[j];
-                v[j] = aux;
-            }
-            resultado(v);
-        }
-
         int inf = 0; // primeiro elemento do vetor
         int sup = v.length - 1; // ultimo elemento do vetor
         int meio;
 
+        // Laço de ordenação
+        for (int i = 1; i < v.length; i++) {
+            int aux = v[i];
+            for (int j = i - 1; j >= 0 && (v[j] > aux); j--) {
+                v[j + 1] = v[j];
+                v[j] = aux;
+            }
+        }
+
+        // Laço de busca
         while (inf <= sup) {
             meio = inf + (sup - inf) / 2;
             if (valor == v[meio]) {
@@ -121,8 +118,9 @@ class Vetor {
         System.out.println("Valor " + n + " na posição " + binarySearch(v, n));
         n = 5;
         System.out.println("Valor " + n + " na posição " + binarySearch(v, n));
-        
-        System.out.println("Valor " + n + " na posição " + insertionBSearchControl(v, n));
-        System.out.println("Valor " + n + " na posição " + insertionBSearchDirect(v, n));
+
+        n = 2;
+        System.out.println("Valor (insertionBSearchControl) " + n + " na posição " + insertionBSearchControl(v, n));
+        System.out.println("Valor (insertionBSearchDirect) " + n + " na posição " + insertionBSearchDirect(v, n));
     }
 }
