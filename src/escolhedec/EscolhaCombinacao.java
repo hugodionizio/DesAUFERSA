@@ -10,7 +10,10 @@ package escolhedec;
  *
  * @author Aluno
  */
-public class EscolheDeC {
+public class EscolhaCombinacao {
+    /*
+     * Divisao e conquista
+    */
     public static int escolhaDeC(int r, int n) {
         if (r == 0 || n == r)
             return 1;
@@ -18,7 +21,7 @@ public class EscolheDeC {
             return escolhaDeC(r-1, n-1) + escolhaDeC(r, n-1);
     }
     
-    public static int escolharPD(int r, int n) {
+    public static int escolhaPD(int r, int n) {
         int i, j;
         int [][]M = new int[n][r];
         int [][]T = new int[n+1][r+1];
@@ -46,7 +49,8 @@ public class EscolheDeC {
         // TODO code application logic here
         int r = 5, n = 9;
         
-        System.out.println(EscolheDeC.escolhaDeC(r, n));
+        System.out.println(EscolhaCombinacao.escolhaDeC(r, n));
+        System.out.println(EscolhaCombinacao.escolhaPD(r, n));
     }
     
 }
