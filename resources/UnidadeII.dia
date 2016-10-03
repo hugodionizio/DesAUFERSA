@@ -516,7 +516,7 @@
       <dia:attribute name="attributes">
         <dia:composite type="umlattribute">
           <dia:attribute name="name">
-            <dia:string>#rosca[]#</dia:string>
+            <dia:string>#porca[]#</dia:string>
           </dia:attribute>
           <dia:attribute name="type">
             <dia:string>#int#</dia:string>

@@ -11,14 +11,14 @@ package trabalhoUnidII;
  */
 /*Coleção de porcas e parafusos*/
 class Colecao {
-	protected int rosca[];
-	protected int parafuso[];
+	protected int[] porcas;
+	protected int[] parafusos;
 
 	public Colecao() {
 		
 	}
 
-	public void ordenarRoscasParafusos (int roscas[], int parafusos[]) {
+	public void ordenarPorcasParafusos (int roscas[], int parafusos[]) {
             int x[] = new int[roscas.length*parafusos.length];
             for (int i = 0; i < roscas.length; i++) {
                 for (int j = 0; j < parafusos.length; j++) {

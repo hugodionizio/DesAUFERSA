@@ -13,15 +13,23 @@ class HashHeap {
 
     protected int listaHeap[];
 
-    public HashHeap() {
+    // Baseado no algoritmo Hash do Rosetta Code
+    // http://rohttp://rosettacode.org/wiki/Associative_arrays/Creation/Csettacode.org/wiki/Associative_arrays/Creation/C
+    private int size;
+    private Object keys[];
+    private Object values[];
 
+    public HashHeap() {
+        this.keys = null;
+        this.values = null;
+        this.size = 0;
     }
 
     public int encontrarK(int a) {
         return 0;
 
     }
-    
+
     public static int array_hash_horner(int v[], int m) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         int i, h = v[0];
@@ -43,10 +51,39 @@ class HashHeap {
         for (i = 1; i < v.length(); i++) // método de Horner
         {
             h = (h * 256 + v.charAt(i)) % m;  /* Ex.: "AB" = (65 * 256 + 66) % m */
+
         }
 
         return h;
 
+    }
+
+    
+    public void hash_new(int size) {
+        this.keys = new Object[size];
+        this.values = new Object[size];
+        this.size = size;
+
+//        return h;
+    }
+
+    public int hash_index(HashHeap h, Object key) {
+        int i = key.hashCode() % h.size;
+        while (h.keys[i] != null && h.keys[i] != key) {
+            i = (i + 1) % h.size;
+        }
+        return i;
+    }
+
+    public void hash_insert(HashHeap h, Object key, Object value) {
+        int i = hash_index(h, key);
+        h.keys[i] = key;
+        h.values[i] = value;
+    }
+
+    public Object hash_lookup(HashHeap h, Object key) {
+        int i = hash_index(h, key);
+        return h.values[i];
     }
 
     //Implementação da Heap Máxima
@@ -121,15 +158,26 @@ class HashHeap {
         int c = string_hash_horner(chave1, 50);
         int c2 = string_hash_horner(chave2, 50);
         int c3 = string_hash_horner(chave3, 50);
-        
+
         System.out.println(chave1 + ": " + c);
         System.out.println(chave2 + ": " + c2);
         System.out.println(chave3 + ": " + c3);
-        
+
         int hash[] = new int[v.length];
         for (int i = 0; i < hash.length; i++) {
             hash[i] = array_hash_horner(v, 5);
-            System.out.print(v[i]+" ");
-        }
+            System.out.print(v[i] + " ");
+        }        
+        System.out.println("");
+
+        HashHeap h = new HashHeap();
+        h.hash_new(15);
+        h.hash_insert(h, "hello", "world");
+        h.hash_insert(h, "a", "b");
+        System.out.println("hello => "+h.hash_lookup(h, "hello"));
+        System.out.println("herp => "+h.hash_lookup(h, "herp"));
+        System.out.println("a => "+h.hash_lookup(h, "a"));
+        
+        
     }
 }
