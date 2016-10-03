@@ -18,8 +18,19 @@ class Colecao {
 		
 	}
 
-	public void ordenarRoscasParafusos () {
+	public void ordenarRoscasParafusos (int roscas[], int parafusos[]) {
+            int x[] = new int[roscas.length*parafusos.length];
+            for (int i = 0; i < roscas.length; i++) {
+                for (int j = 0; j < parafusos.length; j++) {
+                    if(roscas[i] == parafusos[j])
+                        x[i*j] = 1;
+                }
+            }
 		
 	}
+        
+        public static void main(String[] args) {
+            
+        }
 
 }
