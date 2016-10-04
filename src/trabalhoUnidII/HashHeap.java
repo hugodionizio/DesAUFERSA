@@ -58,7 +58,6 @@ class HashHeap {
 
     }
 
-    
     public void hash_new(int size) {
         this.keys = new Object[size];
         this.values = new Object[size];
@@ -134,6 +133,20 @@ class HashHeap {
         }
         System.out.println();
     }
+    
+    /**
+     * Busca posição de um valor em um vetor ordenado por heap
+     */
+    public static int HeapHashSearchControl(int v[], int valor) {
+
+        ordenacaoHeap(v);
+        HashHeap h = new HashHeap();
+        h.hash_new(v.length);
+        for (int i = 0; i < v.length; i++) {
+            h.hash_insert(h, v[i], null);           
+        }
+        return h.hash_index(h, valor);
+    }
 
     public static void main(String[] args) {
         int[] v = {2, 5, 3, 8, 6, 4, 7, 1};
@@ -163,21 +176,24 @@ class HashHeap {
         System.out.println(chave2 + ": " + c2);
         System.out.println(chave3 + ": " + c3);
 
-        int hash[] = new int[v.length];
-        for (int i = 0; i < hash.length; i++) {
-            hash[i] = array_hash_horner(v, 5);
-            System.out.print(v[i] + " ");
-        }        
-        System.out.println("");
-
         HashHeap h = new HashHeap();
         h.hash_new(15);
         h.hash_insert(h, "hello", "world");
         h.hash_insert(h, "a", "b");
-        System.out.println("hello => "+h.hash_lookup(h, "hello"));
-        System.out.println("herp => "+h.hash_lookup(h, "herp"));
-        System.out.println("a => "+h.hash_lookup(h, "a"));
+        System.out.println("hello => " + h.hash_lookup(h, "hello")+"("+h.hash_index(h, "hello")+")");
+        System.out.println("b => " + h.hash_lookup(h, "b")+"("+h.hash_index(h, "b")+")");
+        System.out.println("a => " + h.hash_lookup(h, "a")+"("+h.hash_index(h, "a")+")");
+
+        for (int i = 0; i < v.length; i++) {
+            h.hash_insert(h, v[i], null);
+            System.out.println(v[i]+" => " + h.hash_lookup(h, v[i])+"("+h.hash_index(h, v[i])+")");
+        }
+        System.out.println("");
         
-        
+        for (int i = 0; i < v.length; i++) {
+            v[i] = v.length - i;
+        }
+        int n = 3;
+        System.out.println("Valor (HeapHashSearchControl) " + n + " na posição " + HeapHashSearchControl(v, n));
     }
 }
