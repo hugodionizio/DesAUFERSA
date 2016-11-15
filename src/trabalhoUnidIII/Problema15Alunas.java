@@ -32,6 +32,7 @@ class Problema15Alunas {
             "Olívia"};
         String dias[] = {"Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"};
         int comb = 0;
+        int semanas = 0;
 
         System.out.println("Problema das 15 Alunas");
         for (int i = 0; i < alunas.length; i += 3) {
@@ -42,23 +43,33 @@ class Problema15Alunas {
             System.out.println(alunas[i].charAt(0) + "" + alunas[i + 1].charAt(0)
                     + "" + alunas[i + 2].charAt(0));
         }
-        
-        for (int i = 0; i < alunas.length-2; i++) {
-            for (int j = 1; j < alunas.length-1; j++) {
-                for (int k = 2; k < 10; k++) {
-                System.out.println(alunas[i].charAt(0) + "" + alunas[j].charAt(0)
-                    + "" + alunas[k].charAt(0));
-                comb++;
-                }                
+
+        for (int i = 0; i < alunas.length - 2; i++) {
+            for (int j = 1; j < alunas.length - 1; j++) {
+                for (int k = 2; k < alunas.length; k++) {
+                    if (i != j && i != k && j != k) {
+                        if ((comb) % 5 == 0 && (comb) % 7 == 0) {
+                            for (int d = 0; d < dias.length; d++) {
+                                System.out.print(dias[d] + "|");
+                            }
+                            System.out.println("");
+                            semanas++;
+                        }
+
+                        System.out.print(alunas[i].charAt(0) + "" + alunas[j].charAt(0)
+                                + "" + alunas[k].charAt(0));
+                        if ((comb + 1) % 7 != 0) {
+                            System.out.print("|");
+                        } else {
+                            System.out.println("");
+                        }
+                        comb++;
+                    }
+                }
             }
         }
-        
-        System.out.println("Número de combinações: "+comb);
-        
-        for (int i = 0; i < dias.length; i++) {
-            System.out.print(dias[i]+"|");
-        }
-        System.out.println("");
-    }
 
+        System.out.println("Número de combinações: " + comb
+                + "\nNúmero de semanas: " + semanas);
+    }
 }
