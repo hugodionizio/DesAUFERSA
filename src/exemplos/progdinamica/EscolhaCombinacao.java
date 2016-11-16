@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package escolhedec;
+package exemplos.progdinamica;
 
 /**
  *
@@ -22,8 +22,8 @@ public class EscolhaCombinacao {
     }
     
     public static int escolhaPD(int r, int n) {
-        int i, j;
-        int [][]M = new int[n][r];
+        int i = n+1, j = r+1;
+        int [][]M = new int[i][j];
         int [][]T = new int[n+1][r+1];
         
         for (i = 0; i < n-r; i++) {
@@ -32,14 +32,14 @@ public class EscolhaCombinacao {
         for (i = 0; i < r; i++) {
             M[i][i] = 1;
         }
-        for (j = 0; j < 10; j++) {
-            for (i = 0; i < 10; i++) {
-                M[i][j] = T[i-1][j-1] + T[i-1][j];
+        for (j = 1; j < r; j++) {
+            for (i = j+1; i < n-r+j; i++) {
+                M[i][j] = M[i-1][j-1] + M[i-1][j];
             }
         }
             
         
-        return M[r][n];
+        return M[n][r];
     }
 
     /**
@@ -47,10 +47,12 @@ public class EscolhaCombinacao {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        int r = 5, n = 9;
+        int r = 5, n = 9, out;
         
-        System.out.println(EscolhaCombinacao.escolhaDeC(r, n));
-        System.out.println(EscolhaCombinacao.escolhaPD(r, n));
+        out = EscolhaCombinacao.escolhaDeC(r, n);
+        System.out.println(out);
+        out = EscolhaCombinacao.escolhaPD(r, n);
+        System.out.println(out);
     }
     
 }

@@ -4,7 +4,7 @@
  *          atraves de intercalaçao (Divisao e conquista)
  * Data : 28-08-2016 07:52:16 
  */
-package mergesort;
+package exemplos.ordenacao;
 
 /**
  *

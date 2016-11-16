@@ -1,4 +1,4 @@
-package triangulopascal;
+package exemplos.progdinamica;
 
 /**
  *
