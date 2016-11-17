@@ -130,32 +130,33 @@ class Problema15Alunas {
     }
 
     public void escalar() {
-        int j = 0, linha = 5, novalinha;
+        int j = 0, linha = 5, linhaSeg, linhaTer;
         for (int i = 0; i < alunas.length; i += 3) {
             escala[j][0] = alunas[i].charAt(0) + "" + alunas[i + 1].charAt(0) + "" + alunas[i + 2].charAt(0);
             j++;
         }
 
         for (int dia = 1; dia < dias.length; dia++) {
-            novalinha = 0;
+            linhaSeg = 0;
+            linhaTer = 0;
             for (int i = 0; i < linha; i++) {
-                int segT = dia+linha-1+novalinha;
-                int terT = dia +linha+novalinha;
-                
-                if (segT >= alunas.length)
-                    segT = linha;
-                
-                if (terT >= alunas.length)
-                    terT = linha;
-                
-                if (segT>terT){
+                int segT = dia + linha - 1 + linhaSeg;
+                int terT = dia + 2*linha - 1 + linhaTer;
+
+                if (terT >= alunas.length) {
+                    int estouro = terT-alunas.length;
+                    terT = linha + estouro;
+                }
+
+                if (segT > terT) {
                     int aux = terT;
                     terT = segT;
                     segT = aux;
                 }
 
                 escala[i][dia] = alunas[i].charAt(0) + "" + alunas[segT].charAt(0) + "" + alunas[terT].charAt(0);
-                novalinha++;
+                linhaSeg++;
+                linhaTer++;
             }
         }
     }
