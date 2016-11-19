@@ -23,8 +23,8 @@ class Problema15Alunas {
             "Olívia"};
 
         int linhas = 5;
-        int numSemanas = 7;
-        escala = new String[linhas][numSemanas];
+        int numDias = 7;
+        escala = new String[linhas][numDias];
 
         int num = 15;
         alunas = new String[num];
@@ -59,6 +59,55 @@ class Problema15Alunas {
 
     public int getSemanas() {
         return semanas;
+    }
+
+    public int buscar(char ch, String palavra) {
+        int l = 0, count = 0;
+
+        for (l = 0; l < palavra.length(); l++) {
+            if (ch == palavra.charAt(l)) {
+                count = l;
+                l = palavra.length();
+            }
+        }
+        if (ch != palavra.charAt(count)) {
+            count = -1;
+        }
+
+        return count;
+    }
+
+    public boolean temInterseccao(String particao, String sequencia) {
+        boolean sucesso = false;
+
+        for (int i = 0; i < sequencia.length(); i++) {
+            for (int j = 0; j < particao.length(); j++) {
+                if (buscar(particao.charAt(j), sequencia) != -1) {
+                    sucesso = true;
+                    j = particao.length();
+                    i = sequencia.length();
+                }
+            }
+        }
+
+        return sucesso;
+    }
+
+    public boolean eAceitavelN(int x, int y, int z) {
+        boolean sucesso = false;
+        int j = 0;
+        String teste = "" + (char) x + (char) y + (char) z;
+
+        for (int i = 0; i < 5; i++) {
+            if (!temInterseccao(teste, escala[i][j])) {
+                sucesso = true;               
+            }
+            else {
+                i = 5;
+            }
+        }
+
+        return sucesso;
     }
 
     public boolean eAceitavel(int x, int y, int z) {
@@ -129,7 +178,7 @@ class Problema15Alunas {
         }
     }
 
-    public void escalar() {
+    public void escalarInterativo() {
         int j = 0, LINHA = 5, novaLinha, linhaTer;
         for (int i = 0; i < alunas.length; i += 3) {
             escala[j][0] = alunas[i].charAt(0) + "" + alunas[i + 1].charAt(0) + "" + alunas[i + 2].charAt(0);
@@ -143,13 +192,13 @@ class Problema15Alunas {
                 int terT = segT + 1;
 
                 if (segT >= alunas.length) {
-                    int estouro = segT-alunas.length;
+                    int estouro = segT - alunas.length;
                     segT = LINHA + estouro;
-                    terT = segT+1;
+                    terT = segT + 1;
                 }
-                
+
                 if (terT >= alunas.length) {
-                    int estouro = terT-alunas.length;
+                    int estouro = terT - alunas.length;
                     terT = LINHA + estouro;
                 }
 
@@ -160,7 +209,7 @@ class Problema15Alunas {
                 }
 
                 escala[i][dia] = alunas[i].charAt(0) + "" + alunas[segT].charAt(0) + "" + alunas[terT].charAt(0);
-                novaLinha+=2;
+                novaLinha += 2;
             }
         }
     }
@@ -196,6 +245,10 @@ class Problema15Alunas {
                 }
             }
         }
+    }
+
+    public String mostrarTrio(int dia, int linha) {
+        return escala[linha][dia];
     }
 
     public void mostrarSemana() {
@@ -236,7 +289,13 @@ class Problema15Alunas {
         int i = 0, j = 0, k = 0;
         p.escalarP(i, j, k);
 
-        p.escalar();
+        p.escalarInterativo();
         p.mostrarSemana();
+
+        System.out.println("A posição está em " + p.buscar('C', "ABC"));
+
+        System.out.println("A intersecção da partição é " + p.temInterseccao("DEF", "ABC"));
+
+        System.out.println("A aceitabilidade é " + p.eAceitavelN('P', 'Q', 'R'));
     }
 }
