@@ -57,6 +57,14 @@ class Problema15Alunas {
         semanas = 0;
     }
 
+    public void resetSemana() {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 7; j++) {
+                escala[i][j] = "";
+            }
+        }
+    }
+
     public int getSemanas() {
         return semanas;
     }
@@ -302,6 +310,10 @@ class Problema15Alunas {
 
         System.out.println("A intersecção da partição é " + p.temInterseccao("DEF", "ABC"));
 
-        System.out.println("A aceitabilidade é " + p.eAceitavelN('T', 'Q', 'R'));
+        System.out.println("A aceitabilidade é " + p.eAceitavelN('A', 'B', 'C'));
+
+        p.resetSemana();
+        p.mostrarSemana();
+        System.out.println("A aceitabilidade é " + p.eAceitavelN('A', 'B', 'C'));
     }
 }
