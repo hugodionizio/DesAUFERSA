@@ -98,12 +98,18 @@ class Problema15Alunas {
         int j = 0;
         String teste = "" + (char) x + (char) y + (char) z;
 
-        for (int i = 0; i < 5; i++) {
-            if (!temInterseccao(teste, escala[i][j])) {
-                sucesso = true;               
-            }
-            else {
-                i = 5;
+        if (x < y && y < z) {
+            for (j = 0; j < 7; j++) {
+                if (!sucesso) {
+                    for (int i = 0; i < 5; i++) {
+                        if (!temInterseccao(teste, escala[i][j])) {
+                            sucesso = true;
+                        } else {
+                            sucesso = false;
+                            i = 5;
+                        }
+                    }
+                }
             }
         }
 
@@ -296,6 +302,6 @@ class Problema15Alunas {
 
         System.out.println("A intersecção da partição é " + p.temInterseccao("DEF", "ABC"));
 
-        System.out.println("A aceitabilidade é " + p.eAceitavelN('P', 'Q', 'R'));
+        System.out.println("A aceitabilidade é " + p.eAceitavelN('T', 'Q', 'R'));
     }
 }
