@@ -72,7 +72,7 @@ class Problema15Alunas {
     public int buscar(char ch, String palavra) {
         int l = 0, count = 0;
 
-        if (!palavra.isEmpty()) {
+        if (palavra != null && !palavra.isEmpty()) {
             for (l = 0; l < palavra.length(); l++) {
                 if (ch == palavra.charAt(l)) {
                     count = l;
@@ -82,8 +82,7 @@ class Problema15Alunas {
             if (ch != palavra.charAt(count)) {
                 count = -1;
             }
-        }
-        else {
+        } else {
             count = -1;
         }
 
@@ -93,12 +92,14 @@ class Problema15Alunas {
     public boolean temInterseccao(String particao, String sequencia) {
         boolean sucesso = false;
 
-        for (int i = 0; i < sequencia.length(); i++) {
-            for (int j = 0; j < particao.length(); j++) {
-                if (buscar(particao.charAt(j), sequencia) != -1) {
-                    sucesso = true;
-                    j = particao.length();
-                    i = sequencia.length();
+        if (sequencia != null && !sequencia.isEmpty()) {
+            for (int i = 0; i < sequencia.length(); i++) {
+                for (int j = 0; j < particao.length(); j++) {
+                    if (buscar(particao.charAt(j), sequencia) != -1) {
+                        sucesso = true;
+                        j = particao.length();
+                        i = sequencia.length();
+                    }
                 }
             }
         }
@@ -130,13 +131,14 @@ class Problema15Alunas {
 
         return sucesso;
     }
-    
+
     public boolean existeDuplaTrio(int x, int y, int z) {
         boolean sucesso = false;
-        
-        if(existeDupla(x, y) || existeDupla(x, z) || existeDupla(y, z))
+
+        if (existeDupla(x, y) || existeDupla(x, z) || existeDupla(y, z)) {
             sucesso = true;
-        
+        }
+
         return sucesso;
     }
 
@@ -165,10 +167,9 @@ class Problema15Alunas {
         if (dia != -1) {
             for (int i = 0; i < 5; i++) {
                 if (!temInterseccao(teste, escala[i][dia])) {
-                    if(!existeDuplaTrio(x, y, z)) {
-                        sucesso = true;                        
-                    }
-                    else {
+                    if (!existeDuplaTrio(x, y, z)) {
+                        sucesso = true;
+                    } else {
                         sucesso = false;
                     }
                 } else {
@@ -188,10 +189,11 @@ class Problema15Alunas {
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 5; j++) {
                 if (eAceitavelN(x, y, z, i)) {
-                    if (escala[j][i].isEmpty()) {
+                    if (escala[j][i] == null || escala[j][i].isEmpty()) {
                         escala[j][i] = teste;
                         j = 5;
                         i = 7;
+                        sucesso = true;
                     }
                 }
             }
@@ -232,17 +234,13 @@ class Problema15Alunas {
 
     public void escalarT(int i, int j, int k) {
         if (k < alunas.length) {
-            if (eAceitavel(i, j, k)) {
+            if (inserirTrio(alunas[i].charAt(0), alunas[j].charAt(0), alunas[k].charAt(0))) {
+                comb++;
                 if (comb > 34) {
                     comb = 0;
                     mostrarSemana();
                     semanas++;
                 }
-                int x = (int) comb / 7;
-                int y = comb % 7;
-                escala[x][y] = alunas[i].charAt(0) + "" + alunas[j].charAt(0)
-                        + "" + alunas[k].charAt(0);
-                comb++;
             }
             k++;
             escalarT(i, j, k);
@@ -401,6 +399,6 @@ class Problema15Alunas {
         p.mostrarSemana();
 
         System.out.println("Existência de duplas " + p.existeDupla('G', 'H'));
-        System.out.println("Existência de duplas do trio "+p.existeDuplaTrio('A', 'B', 'E'));
+        System.out.println("Existência de duplas do trio " + p.existeDuplaTrio('A', 'B', 'E'));
     }
 }
