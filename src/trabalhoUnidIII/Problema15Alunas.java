@@ -130,6 +130,15 @@ class Problema15Alunas {
 
         return sucesso;
     }
+    
+    public boolean existeDuplaTrio(int x, int y, int z) {
+        boolean sucesso = false;
+        
+        if(existeDupla(x, y) || existeDupla(x, z) || existeDupla(y, z))
+            sucesso = true;
+        
+        return sucesso;
+    }
 
     public boolean eAceitavelN(int x, int y, int z, int dia) {
         boolean sucesso = false;
@@ -386,6 +395,7 @@ class Problema15Alunas {
         p.inserirTrio('M', 'N', 'O');
         p.mostrarSemana();
 
-        System.out.println("Existencia de duplas " + p.existeDupla('G', 'H'));
+        System.out.println("Existência de duplas " + p.existeDupla('G', 'H'));
+        System.out.println("Existência de duplas do trio "+p.existeDuplaTrio('A', 'H', 'O'));
     }
 }
