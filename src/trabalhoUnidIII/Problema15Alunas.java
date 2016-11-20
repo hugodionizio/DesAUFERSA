@@ -72,13 +72,18 @@ class Problema15Alunas {
     public int buscar(char ch, String palavra) {
         int l = 0, count = 0;
 
-        for (l = 0; l < palavra.length(); l++) {
-            if (ch == palavra.charAt(l)) {
-                count = l;
-                l = palavra.length();
+        if (!palavra.isEmpty()) {
+            for (l = 0; l < palavra.length(); l++) {
+                if (ch == palavra.charAt(l)) {
+                    count = l;
+                    l = palavra.length();
+                }
+            }
+            if (ch != palavra.charAt(count)) {
+                count = -1;
             }
         }
-        if (ch != palavra.charAt(count)) {
+        else {
             count = -1;
         }
 
@@ -94,6 +99,31 @@ class Problema15Alunas {
                     sucesso = true;
                     j = particao.length();
                     i = sequencia.length();
+                }
+            }
+        }
+
+        return sucesso;
+    }
+
+    public boolean existeDupla(int x, int y) {
+        boolean sucesso = false;
+        int dupla = 0;
+
+        for (int i = 0; i < 7; i++) {
+            if (!sucesso) {
+                dupla = 0;
+                for (int j = 0; j < 5; j++) {
+                    if (buscar((char) x, escala[j][i]) != -1) {
+                        dupla++;
+                        if (buscar((char) y, escala[j][i]) != -1) {
+                            dupla++;
+                        }
+                        if (dupla > 1) {
+                            sucesso = true;
+                        }
+                        j = 5;
+                    }
                 }
             }
         }
@@ -340,7 +370,7 @@ class Problema15Alunas {
 
         System.out.println("A posição está em " + p.buscar('C', "ABC"));
 
-        System.out.println("A intersecção da partição é " + p.temInterseccao("DEF", "ABC"));
+        System.out.println("A intersecção da partição é " + p.temInterseccao("AD", "ABC"));
 
         System.out.println("A aceitabilidade é " + p.eAceitavelN('A', 'B', 'C', -1));
 
@@ -355,5 +385,7 @@ class Problema15Alunas {
         p.inserirTrio('A', 'B', 'E');
         p.inserirTrio('M', 'N', 'O');
         p.mostrarSemana();
+
+        System.out.println("Existencia de duplas " + p.existeDupla('G', 'H'));
     }
 }
