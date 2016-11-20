@@ -1,0 +1,12 @@
+Entrada: uma fórmula Horn
+Saída: uma atribuição satisfatória, se uma existe
+
+faça todas as variáveis falsas
+
+enquanto existe uma implicação que não está satisfeita:
+	faça a variável do lado direito da implicacação verdadeira
+	
+se todas as cláusulas puramente negativas estão satisfeitas:
+	retornar a atribuição
+senão:
+	retornar "fórmula não é satisfeita"
