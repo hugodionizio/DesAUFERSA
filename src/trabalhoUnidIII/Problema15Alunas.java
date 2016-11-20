@@ -165,7 +165,12 @@ class Problema15Alunas {
         if (dia != -1) {
             for (int i = 0; i < 5; i++) {
                 if (!temInterseccao(teste, escala[i][dia])) {
-                    sucesso = true;
+                    if(!existeDuplaTrio(x, y, z)) {
+                        sucesso = true;                        
+                    }
+                    else {
+                        sucesso = false;
+                    }
                 } else {
                     sucesso = false;
                     i = 5;
@@ -389,13 +394,13 @@ class Problema15Alunas {
 
         p.inserirTrio('A', 'B', 'C');
         p.inserirTrio('A', 'D', 'G');
-        p.inserirTrio('B', 'E', 'H');
+        p.inserirTrio('D', 'E', 'F');
+        p.inserirTrio('A', 'E', 'J');
         p.inserirTrio('G', 'H', 'I');
-        p.inserirTrio('A', 'B', 'E');
-        p.inserirTrio('M', 'N', 'O');
+        p.inserirTrio('B', 'E', 'H');
         p.mostrarSemana();
 
         System.out.println("Existência de duplas " + p.existeDupla('G', 'H'));
-        System.out.println("Existência de duplas do trio "+p.existeDuplaTrio('A', 'H', 'O'));
+        System.out.println("Existência de duplas do trio "+p.existeDuplaTrio('A', 'B', 'E'));
     }
 }
