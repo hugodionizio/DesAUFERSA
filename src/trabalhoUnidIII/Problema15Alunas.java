@@ -101,7 +101,7 @@ class Problema15Alunas {
         return sucesso;
     }
 
-    public boolean eAceitavelN(int x, int y, int z) {
+    public boolean eAceitavelN(int x, int y, int z, int dia) {
         boolean sucesso = false;
         int j = 0;
         String teste = "" + (char) x + (char) y + (char) z;
@@ -116,6 +116,38 @@ class Problema15Alunas {
                             sucesso = false;
                             i = 5;
                         }
+                    }
+                } else {
+                    j = 7;
+                }
+            }
+        }
+
+        if (dia != -1) {
+            for (int i = 0; i < 5; i++) {
+                if (!temInterseccao(teste, escala[i][dia])) {
+                    sucesso = true;
+                } else {
+                    sucesso = false;
+                    i = 5;
+                }
+            }
+        }
+
+        return sucesso;
+    }
+
+    public boolean inserirTrio(int x, int y, int z) {
+        boolean sucesso = false;
+        String teste = "" + (char) x + (char) y + (char) z;
+
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (eAceitavelN(x, y, z, i)) {
+                    if (escala[j][i].isEmpty()) {
+                        escala[j][i] = teste;
+                        j = 5;
+                        i = 7;
                     }
                 }
             }
@@ -310,10 +342,18 @@ class Problema15Alunas {
 
         System.out.println("A intersecção da partição é " + p.temInterseccao("DEF", "ABC"));
 
-        System.out.println("A aceitabilidade é " + p.eAceitavelN('A', 'B', 'C'));
+        System.out.println("A aceitabilidade é " + p.eAceitavelN('A', 'B', 'C', -1));
 
         p.resetSemana();
         p.mostrarSemana();
-        System.out.println("A aceitabilidade é " + p.eAceitavelN('A', 'B', 'C'));
+        System.out.println("A aceitabilidade é " + p.eAceitavelN('A', 'B', 'C', -1));
+
+        p.inserirTrio('A', 'B', 'C');
+        p.inserirTrio('A', 'D', 'G');
+        p.inserirTrio('B', 'E', 'H');
+        p.inserirTrio('G', 'H', 'I');
+        p.inserirTrio('A', 'B', 'E');
+        p.inserirTrio('M', 'N', 'O');
+        p.mostrarSemana();
     }
 }
