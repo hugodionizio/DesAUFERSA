@@ -13,6 +13,7 @@ class Problema15Alunas {
 
     protected String[] alunas;
     protected String[][] escala;
+    private String[][] tabela;
     private int comb;
     private String dias[] = {"Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"};
     private int semanas;
@@ -32,6 +33,32 @@ class Problema15Alunas {
             alunas[i] = aux[i];
         }
 
+        tabela = new String[alunas.length][alunas.length];
+    }
+
+    public void preencherTabela() {
+        for (int i = 0; i < alunas.length; i++) {
+            for (int j = 0; j < alunas.length; j++) {
+                tabela[i][j] = "" + (i + j) % alunas.length;
+            }
+        }
+    }
+
+    public void quasiGrupo() {
+        for (int i = 0; i < alunas.length - 1; i++) {
+            for (int j = 0; j < alunas.length - 1; j++) {
+                tabela[i][j] = "" + 1 + (i + j) % alunas.length;
+            }
+        }
+    }
+
+    public void mostrarTabela() {
+        for (int i = 0; i < alunas.length; i++) {
+            for (int j = 0; j < alunas.length; j++) {
+                System.out.print(tabela[i][j] + "|");
+            }
+            System.out.println("");
+        }
     }
 
     /**
@@ -162,19 +189,19 @@ class Problema15Alunas {
                     j = 7;
                 }
             }
-        }
 
-        if (dia != -1) {
-            for (int i = 0; i < 5; i++) {
-                if (!temInterseccao(teste, escala[i][dia])) {
-                    if (!existeDuplaTrio(x, y, z)) {
-                        sucesso = true;
+            if (dia != -1) {
+                for (int i = 0; i < 5; i++) {
+                    if (!temInterseccao(teste, escala[i][dia])) {
+                        if (!existeDuplaTrio(x, y, z)) {
+                            sucesso = true;
+                        } else {
+                            sucesso = false;
+                        }
                     } else {
                         sucesso = false;
+                        i = 5;
                     }
-                } else {
-                    sucesso = false;
-                    i = 5;
                 }
             }
         }
@@ -198,6 +225,14 @@ class Problema15Alunas {
                 }
             }
         }
+
+        return sucesso;
+    }
+
+    public boolean inserirTrio(String trio) {
+        boolean sucesso = false;
+
+        inserirTrio(trio.charAt(0), trio.charAt(1), trio.charAt(2));
 
         return sucesso;
     }
@@ -256,17 +291,23 @@ class Problema15Alunas {
         }
     }
 
-    public void escalarP(int i, int j, int k) {
-        if (i < alunas.length) {
-            escalarS(i, j, k);
-            i++;
-            j = 0;
-            k = 0;
-            escalarP(i, j, k);
+    public void escalarP(int u, int v, int w) {
+        int j = 0;
+        for (int i = 0; i < alunas.length; i += 3) {
+            escala[j][0] = alunas[i].charAt(0) + "" + alunas[i + 1].charAt(0) + "" + alunas[i + 2].charAt(0);
+            j++;
+        }
+
+        if (u < alunas.length) {
+            escalarS(u, v, w);
+            u++;
+            v = 0;
+            w = 0;
+            escalarP(u, v, w);
         }
     }
 
-    public void escalarInterativo() {
+    public void escalarIterativo() {
         int j = 0, LINHA = 5, novaLinha, linhaTer;
         for (int i = 0; i < alunas.length; i += 3) {
             escala[j][0] = alunas[i].charAt(0) + "" + alunas[i + 1].charAt(0) + "" + alunas[i + 2].charAt(0);
@@ -366,39 +407,58 @@ class Problema15Alunas {
     public static void main(String[] args) {
         System.out.println("Problema das 15 Alunas");
         Problema15Alunas p = new Problema15Alunas();
-        //p.organizarEscala();
+
+        int i = 0, j = 0, k = 0;
+        p.resetCombinacoes();
+        p.resetSemana();
+        p.escalarP(i, j, k);
+        p.mostrarSemana();
 
         System.out.println("\nNúmero de combinações: " + p.getCombinacoes()
                 + "\nNúmero de semanas: " + p.getSemanas());
 
-        p.resetCombinacoes();
-        p.resetSemanas();
+        int a, b, m, q;
+        a = 26;
+        b = 5;
+        m = 7;
+        q = (a - b) / 7;
 
-        int i = 0, j = 0, k = 0;
-        p.escalarP(i, j, k);
+        System.out.println(a + "==" + b + "(mod" + m + ") = " + q);
 
-        p.escalarInterativo();
-        p.mostrarSemana();
-
-        System.out.println("A posição está em " + p.buscar('C', "ABC"));
-
-        System.out.println("A intersecção da partição é " + p.temInterseccao("AD", "ABC"));
-
-        System.out.println("A aceitabilidade é " + p.eAceitavelN('A', 'B', 'C', -1));
+        p.preencherTabela();
+        p.mostrarTabela();
 
         p.resetSemana();
+        p.inserirTrio("ABC");
+        p.inserirTrio("ADG");
+        p.inserirTrio("AEJ");
+        p.inserirTrio("AFO");
+        p.inserirTrio("AHK");
+        p.inserirTrio("AIM");
+        p.inserirTrio("ALN");
+        p.inserirTrio("DEF");
+        p.inserirTrio("BEH");
+        p.inserirTrio("BFL");
+        p.inserirTrio("BDM");
+        p.inserirTrio("BGN");
+        p.inserirTrio("BKO");
+        p.inserirTrio("BIJ");
+        p.inserirTrio("GHI");
+        p.inserirTrio("CJM");
+        p.inserirTrio("CHO");
+        p.inserirTrio("CGL");
+        p.inserirTrio("CFI");
+        p.inserirTrio("CEN");
+        p.inserirTrio("CDK");
+        p.inserirTrio("JKL");
+        p.inserirTrio("FKN");
+        p.inserirTrio("DIN");
+        p.inserirTrio("EIK");
+        p.inserirTrio("DJO");
+        p.inserirTrio("DHL");
+        p.inserirTrio("EGO");
+        p.inserirTrio("MNO");
+        
         p.mostrarSemana();
-        System.out.println("A aceitabilidade é " + p.eAceitavelN('A', 'B', 'C', -1));
-
-        p.inserirTrio('A', 'B', 'C');
-        p.inserirTrio('A', 'D', 'G');
-        p.inserirTrio('D', 'E', 'F');
-        p.inserirTrio('A', 'E', 'J');
-        p.inserirTrio('G', 'H', 'I');
-        p.inserirTrio('B', 'E', 'H');
-        p.mostrarSemana();
-
-        System.out.println("Existência de duplas " + p.existeDupla('G', 'H'));
-        System.out.println("Existência de duplas do trio " + p.existeDuplaTrio('A', 'B', 'E'));
     }
 }
