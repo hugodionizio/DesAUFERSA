@@ -76,4 +76,20 @@ public class PasseioDoCavalo {
         int y = Integer.parseInt(args[2]);
         new PasseioDoCavalo(n).mostraPasseio(x, y);
     }
+
+    public void resetSemanas(Problema15Alunas problema15Alunas) {
+        problema15Alunas.semanas = 0;
+    }
+
+    public void resetCombinacoes(Problema15Alunas problema15Alunas) {
+        problema15Alunas.comb = 0;
+    }
+
+    public int getCombinacoes(Problema15Alunas problema15Alunas) {
+        return problema15Alunas.comb;
+    }
+
+    public int getSemanas(Problema15Alunas problema15Alunas) {
+        return problema15Alunas.semanas;
+    }
 }

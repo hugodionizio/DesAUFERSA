@@ -13,8 +13,7 @@ class Problema15Alunas {
 
     protected String[] alunas;
     protected String[][] escala;
-    private String[][] tabela;
-    private int comb;
+    private static int comb;
     private String dias[] = {"Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"};
     private int semanas;
 
@@ -33,55 +32,10 @@ class Problema15Alunas {
             alunas[i] = aux[i];
         }
 
-        tabela = new String[alunas.length][alunas.length];
     }
 
-    public void preencherTabela() {
-        for (int i = 0; i < alunas.length; i++) {
-            for (int j = 0; j < alunas.length; j++) {
-                tabela[i][j] = "" + (i + j) % alunas.length;
-            }
-        }
-    }
-
-    public void quasiGrupo() {
-        for (int i = 0; i < alunas.length - 1; i++) {
-            for (int j = 0; j < alunas.length - 1; j++) {
-                tabela[i][j] = "" + 1 + (i + j) % alunas.length;
-            }
-        }
-    }
-
-    public void mostrarTabela() {
-        for (int i = 0; i < alunas.length; i++) {
-            for (int j = 0; j < alunas.length; j++) {
-                System.out.print(tabela[i][j] + "|");
-            }
-            System.out.println("");
-        }
-    }
-
-    /**
-     * Busca em um vetor ordenado por inserção
-     */
-    public void inserirAluna(String a) {
-        int i = 0;
-        while (!alunas[i].isEmpty()) {
-            i++;
-        }
-        alunas[i] = a;
-    }
-
-    public void resetCombinacoes() {
-        comb = 0;
-    }
-
-    public int getCombinacoes() {
-        return comb;
-    }
-
-    public void resetSemanas() {
-        semanas = 0;
+    private int getSemanas() {
+        return semanas;
     }
 
     public void resetSemana() {
@@ -92,8 +46,12 @@ class Problema15Alunas {
         }
     }
 
-    public int getSemanas() {
-        return semanas;
+    public int getComb() {
+        return comb;
+    }
+
+    private void resetCombinacoes() {
+        comb = 0;
     }
 
     public int buscar(char ch, String palavra) {
@@ -229,44 +187,6 @@ class Problema15Alunas {
         return sucesso;
     }
 
-    public boolean inserirTrio(String trio) {
-        boolean sucesso = false;
-
-        inserirTrio(trio.charAt(0), trio.charAt(1), trio.charAt(2));
-
-        return sucesso;
-    }
-
-    public boolean eAceitavel(int x, int y, int z) {
-        // é aceitável se o arranjo do trio estiver ordenado de forma crescente
-        boolean result = (x < y && y < z);
-        if (result) {
-            for (int i = 0; i < comb / 7; i++) {
-                for (int j = 0; j < 3; j++) {
-                    char al = alunas[x].charAt(0);
-                    char es = escala[i][comb % 7].charAt(j);
-                    result = (al != es);
-                    if (result) {
-                        al = alunas[y].charAt(0);
-                        if (al != es) {
-                            al = alunas[z].charAt(0);
-                            result = (al != es);
-                        } else {
-                            result = false;
-                            j = 3;
-                        }
-                    } else {
-                        result = false;
-                        j = 3;
-                    }
-                }
-
-            }
-        }
-
-        return result;
-    }
-
     public void escalarT(int i, int j, int k) {
         if (k < alunas.length) {
             if (inserirTrio(alunas[i].charAt(0), alunas[j].charAt(0), alunas[k].charAt(0))) {
@@ -307,77 +227,11 @@ class Problema15Alunas {
         }
     }
 
-    public void escalarIterativo() {
-        int j = 0, LINHA = 5, novaLinha, linhaTer;
-        for (int i = 0; i < alunas.length; i += 3) {
-            escala[j][0] = alunas[i].charAt(0) + "" + alunas[i + 1].charAt(0) + "" + alunas[i + 2].charAt(0);
-            j++;
-        }
-
-        for (int dia = 1; dia < dias.length; dia++) {
-            novaLinha = 0;
-            for (int i = 0; i < LINHA; i++) {
-                int segT = (LINHA) + novaLinha + (dia - 1);
-                int terT = segT + 1;
-
-                if (segT >= alunas.length) {
-                    int estouro = segT - alunas.length;
-                    segT = LINHA + estouro;
-                    terT = segT + 1;
-                }
-
-                if (terT >= alunas.length) {
-                    int estouro = terT - alunas.length;
-                    terT = LINHA + estouro;
-                }
-
-                if (segT > terT) {
-                    int aux = terT;
-                    terT = segT;
-                    segT = aux;
-                }
-
-                escala[i][dia] = alunas[i].charAt(0) + "" + alunas[segT].charAt(0) + "" + alunas[terT].charAt(0);
-                novaLinha += 2;
-            }
-        }
-    }
-
     public void imprimirDiasSemana() {
         for (int d = 0; d < dias.length; d++) {
             System.out.print(dias[d] + "|");
         }
         System.out.println("");
-    }
-
-    public void organizarEscala() {
-        for (int i = 0; i < alunas.length - 2; i++) {
-            for (int j = 1; j < alunas.length - 1; j++) {
-                for (int k = 2; k < alunas.length; k++) {
-                    if (i != j && i != k && j != k) {
-                        if ((comb) % 5 == 0 && (comb) % 7 == 0) {
-
-                            System.out.println("");
-                            imprimirDiasSemana();
-                            semanas++;
-                        }
-
-                        System.out.print(alunas[i].charAt(0) + "" + alunas[j].charAt(0)
-                                + "" + alunas[k].charAt(0));
-                        if ((comb + 1) % 7 != 0) {
-                            System.out.print("|");
-                        } else {
-                            System.out.println("");
-                        }
-                        comb++;
-                    }
-                }
-            }
-        }
-    }
-
-    public String mostrarTrio(int dia, int linha) {
-        return escala[linha][dia];
     }
 
     public void mostrarSemana() {
@@ -391,19 +245,6 @@ class Problema15Alunas {
         System.out.println("");
     }
 
-    public void particionar() {
-        for (int i = 0; i < alunas.length; i += 3) {
-            System.out.println(alunas[i] + ", " + alunas[i + 1] + ", " + alunas[i + 2]);
-        }
-    }
-
-    public void particionarIniciais() {
-        for (int i = 0; i < alunas.length; i += 3) {
-            System.out.println(alunas[i].charAt(0) + "" + alunas[i + 1].charAt(0)
-                    + "" + alunas[i + 2].charAt(0));
-        }
-    }
-
     public static void main(String[] args) {
         System.out.println("Problema das 15 Alunas");
         Problema15Alunas p = new Problema15Alunas();
@@ -414,51 +255,7 @@ class Problema15Alunas {
         p.escalarP(i, j, k);
         p.mostrarSemana();
 
-        System.out.println("\nNúmero de combinações: " + p.getCombinacoes()
+        System.out.println("\nNúmero de combinações: " + p.getComb()
                 + "\nNúmero de semanas: " + p.getSemanas());
-
-        int a, b, m, q;
-        a = 26;
-        b = 5;
-        m = 7;
-        q = (a - b) / 7;
-
-        System.out.println(a + "==" + b + "(mod" + m + ") = " + q);
-
-        p.preencherTabela();
-        p.mostrarTabela();
-
-        p.resetSemana();
-        p.inserirTrio("ABC");
-        p.inserirTrio("ADG");
-        p.inserirTrio("AEJ");
-        p.inserirTrio("AFO");
-        p.inserirTrio("AHK");
-        p.inserirTrio("AIM");
-        p.inserirTrio("ALN");
-        p.inserirTrio("DEF");
-        p.inserirTrio("BEH");
-        p.inserirTrio("BFL");
-        p.inserirTrio("BDM");
-        p.inserirTrio("BGN");
-        p.inserirTrio("BKO");
-        p.inserirTrio("BIJ");
-        p.inserirTrio("GHI");
-        p.inserirTrio("CJM");
-        p.inserirTrio("CHO");
-        p.inserirTrio("CGL");
-        p.inserirTrio("CFI");
-        p.inserirTrio("CEN");
-        p.inserirTrio("CDK");
-        p.inserirTrio("JKL");
-        p.inserirTrio("FKN");
-        p.inserirTrio("DIN");
-        p.inserirTrio("EIK");
-        p.inserirTrio("DJO");
-        p.inserirTrio("DHL");
-        p.inserirTrio("EGO");
-        p.inserirTrio("MNO");
-        
-        p.mostrarSemana();
     }
 }

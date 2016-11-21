@@ -7,9 +7,10 @@ package trabalhoUnidIII;
 
 /**
  * @function Método Guloso para Fórmulas Horn
- * @author hugo
+ * @author Hugo, Walter Lucas
  */
 class FormulasHorn {
+
     protected boolean[] afirmacoes;
 
     public FormulasHorn() {
@@ -17,82 +18,99 @@ class FormulasHorn {
 
     public void inserir(int a) {
     }
-    
+
     public int numVariaveis(String formulaHorn) {
         int numVariaveis = 0;
-        
+
+        for (int i = 0; i < formulaHorn.length(); i++) {
+            if (formulaHorn.charAt(i) == 'x' || formulaHorn.charAt(i) == 'y' || formulaHorn.charAt(i) == 'x') {
+                numVariaveis++;
+            }
+        }
+
         return numVariaveis;
     }
-    
+
     public int numImplicacoes(String formulaHorn) {
         int numImplicacoes = 0;
-        
+
+        for (int i = 0; i < formulaHorn.length() - 2; i++) {
+            if (formulaHorn.charAt(i) == '=' && formulaHorn.charAt(i + 1) == '>') {
+                numImplicacoes++;
+            }
+        }
+
         return numImplicacoes;
     }
-    
+
     public int numClausulaPuramenteNegativas(String formulaHorn) {
         int numClausulaPuramenteNegativas = 0;
-        
+
+        for (int i = 0; i < formulaHorn.length() - 1; i++) {
+            if (formulaHorn.charAt(i) == '~') {
+                numClausulaPuramenteNegativas++;
+            }
+        }
+
         return numClausulaPuramenteNegativas;
     }
-    
-    public boolean verificarFormula (String formulaHorn) {
+
+    public boolean verificarFormula(String formulaHorn) {
         boolean sucesso = false;
-        
+
         int numVar = numVariaveis(formulaHorn);
         int numImplic = numImplicacoes(formulaHorn);
         int numClausulasPN = numClausulaPuramenteNegativas(formulaHorn);
         boolean variaveis[] = new boolean[numVar];
         boolean implicacoes[] = new boolean[numImplic];
         boolean clausulaPN[] = new boolean[numClausulasPN];
-        
+
         // Todas variáveis são consideradas falsas
         for (int i = 0; i < numVar; i++) {
             variaveis[i] = false;
         }
-        
+
         for (int i = 0; i < numImplic; i++) {
             implicacoes[i] = false;
         }
-        
+
         for (int i = 0; i < numClausulasPN; i++) {
             clausulaPN[i] = false;
         }
-        
+
         int j = 0;
         // Enquanto existir implicações não satisfeitas
-        while(!implicacoes[j]) {
+        while (!implicacoes[j]) {
             // Fazer a variável à direita da implicacação verdadeira
-            implicacoes[j+1] = true;
+            implicacoes[j + 1] = true;
             j++;
         }
-	
+
         // Se todas as cláusulas puramente negativas satisfeitas
         for (int i = 0; i < numClausulasPN; i++) {
-            if (clausulaPN[i])
-        	// Retornar atribuição
+            if (clausulaPN[i]) // Retornar atribuição
+            {
                 sucesso = true;
-            else { // senão
-        	//retornar "Esta fórmula Horn não satisfeita"
+            } else { // senão
+                //retornar "Esta fórmula Horn não satisfeita"
                 sucesso = false;
                 i = numClausulasPN;
             }
-        }        
-        
+        }
+
         return sucesso;
     }
-    
+
     public static void main(String[] args) {
         String formula = "(x^y^z)=>, (x^z)=>w, x=>y, =>x, (x^y)=>w, (~wV~xV~y), (~z)";
-        
+
         FormulasHorn f = new FormulasHorn();
-        
-        if(f.verificarFormula(formula)) {
-            System.out.println(formula);   
-        }
-        else {
+
+        if (f.verificarFormula(formula)) {
+            System.out.println(formula);
+        } else {
             System.out.println("Esta fórmula Horn não satisfeita");
         }
     }
-    
+
 }
